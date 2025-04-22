@@ -4,9 +4,17 @@ import { FaPython, FaReact, FaNodeJs, FaAws, FaGitAlt, FaGithub } from 'react-ic
 import { SiTensorflow, SiJavascript, SiCplusplus, SiPostgresql, SiMysql, SiFlask, SiJenkins } from 'react-icons/si'
 
 const Skills = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
+  // Add separate refs for title and content sections with properly configured options
+  const [titleRef, titleInView] = useInView({
+    triggerOnce: true, // This is critical - ensures animation only happens once
+    threshold: 0.1,
+    rootMargin: "-50px 0px"
+  })
+
+  const [contentRef, contentInView] = useInView({
+    triggerOnce: true, // This is critical - ensures animation only happens once
+    threshold: 0.1,
+    rootMargin: "-50px 0px"
   })
 
   const containerVariants = {
@@ -92,9 +100,9 @@ const Skills = () => {
   return (
     <section id="skills" className="section section-alt py-32">
       <motion.div
-        ref={ref}
+        ref={titleRef}
         initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        animate={titleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
         className="mb-12 motion-element"
       >
@@ -105,10 +113,11 @@ const Skills = () => {
       </motion.div>
 
       <motion.div 
+        ref={contentRef}
         className="grid md:grid-cols-2 gap-8"
         variants={containerVariants}
         initial="hidden"
-        animate={inView ? "visible" : "hidden"}
+        animate={contentInView ? "visible" : "hidden"}
       >
         {categories.map((category, categoryIndex) => (
           <motion.div
