@@ -27,6 +27,7 @@ const Experience = () => {
   const experiences = [
     {
       company: "Software Development Group (SDG)",
+      shortName: "SDG", // For mobile display
       position: "Intern",
       location: "Ramrao Adik Institute of Technology, Navi-Mumbai, MH",
       duration: "January 2022 – June 2022",
@@ -37,6 +38,7 @@ const Experience = () => {
     },
     {
       company: "Association for Computing Machinery (ACM)",
+      shortName: "ACM", // For mobile display
       position: "Intern",
       location: "Navi-Mumbai, MH",
       duration: "October 2021 – January 2022",
@@ -72,19 +74,21 @@ const Experience = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="md:w-1/4 w-full"
         >
-          {/* Improved mobile styling with better scrolling and visual indicators */}
-          <div className="flex md:flex-col overflow-x-auto scrollbar-hide md:overflow-visible border-b md:border-b-0 md:border-l border-slate">
+          {/* Improved mobile styling with proper sizing */}
+          <div className="flex md:flex-col overflow-x-auto md:overflow-visible border-b md:border-b-0 md:border-l border-slate">
             {experiences.map((exp, index) => (
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
-                className={`px-4 py-3 text-left whitespace-nowrap md:whitespace-normal md:border-b-0 transition-colors duration-200 ${
+                className={`px-4 py-3 text-left min-w-[120px] flex-shrink-0 md:flex-shrink md:min-w-0 md:w-full transition-colors duration-200 ${
                   activeTab === index 
                     ? 'text-secondary border-b-2 md:border-b-0 md:border-l-2 border-secondary -ml-px md:pl-5 font-medium bg-navyLight bg-opacity-30'
                     : 'text-slate hover:text-secondary hover:bg-navyLight hover:bg-opacity-20'
                 }`}
               >
-                {exp.company}
+                {/* Show shortName on mobile, full name on desktop */}
+                <span className="md:hidden">{exp.shortName || exp.company}</span>
+                <span className="hidden md:inline">{exp.company}</span>
               </button>
             ))}
           </div>
@@ -103,7 +107,7 @@ const Experience = () => {
               className={`${activeTab === index ? 'block' : 'hidden'}`}
             >
               <h3 className="text-xl text-white font-bold">
-                {exp.position} <span className="text-secondary">@ {exp.company}</span>
+                Intern <span className="text-secondary">@ {exp.company}</span>
               </h3>
               <p className="text-slate mb-4 font-mono">{exp.duration}</p>
               <p className="text-slate mb-2">{exp.location}</p>

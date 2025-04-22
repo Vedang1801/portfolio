@@ -62,13 +62,13 @@ const Contact = () => {
             <div className="flex items-center space-x-4">
               <FaEnvelope className="text-secondary" size={20} />
               <a href="mailto:vedangnitin.malusare@siden.edu" className="text-slate hover:text-secondary transition-colors">
-                vedangnitin.malusare@siden.edu
+                vedangnitin.malusare@pace.edu
               </a>
             </div>
             <div className="flex items-center space-x-4">
               <FaPhone className="text-secondary" size={20} />
               <a href="tel:+1-516283921" className="text-slate hover:text-secondary transition-colors">
-                +1-516283921
+                +1-5513712637
               </a>
             </div>
             <div className="flex items-center space-x-4">
