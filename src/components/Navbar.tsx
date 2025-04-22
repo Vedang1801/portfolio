@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX } from 'react-icons/fi'
 import Link from 'next/link'
+import ResumeModal from './ResumeModal'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [resumeModalOpen, setResumeModalOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,139 +88,154 @@ const Navbar = () => {
     }
   }
 
+  const openResumeModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setResumeModalOpen(true);
+    if (isOpen) setIsOpen(false);
+  };
+
+  const resumeUrl = "https://drive.google.com/file/d/1WaqUm9A_Q5IFtm5wRKzX83PGvSLq_vVN/preview";
+
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-dark-surface/80 nav-shadow py-4' : 'bg-transparent py-6'}`}>
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        <motion.div 
-          variants={logoVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <Link href="/" className="text-2xl font-bold gradient-text">
-            VM
-          </Link>
-        </motion.div>
-
-        {/* Desktop Navigation */}
-        <motion.nav 
-          className="hidden md:flex space-x-8"
-          variants={navVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {navLinks.map((link, i) => (
-            <motion.div 
-              key={link.name}
-              variants={linkVariants}
-            >
-              <Link href={link.href} className="text-text-secondary hover:text-primary transition-all duration-300">
-                <span className="text-accent mr-1 font-mono text-sm">{i + 1}.</span> {link.name}
-              </Link>
-            </motion.div>
-          ))}
-          <motion.div
-            variants={linkVariants}
-          >
-            <motion.a 
-              href="/resume.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="button text-sm rounded-lg"
-              whileHover={{
-                y: -5,
-                transition: { duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }
-              }}
-            >
-              Resume
-            </motion.a>
-          </motion.div>
-        </motion.nav>
-
-        {/* Mobile Navigation Toggle */}
-        <div className="md:hidden">
-          <motion.button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-accent focus:outline-none p-2"
-            whileTap={{ scale: 0.9 }}
-          >
-            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-          </motion.button>
-        </div>
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isOpen && (
+    <>
+      <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-dark-surface/80 nav-shadow py-4' : 'bg-transparent py-6'}`}>
+        <div className="container mx-auto px-6 flex justify-between items-center">
           <motion.div 
-            variants={mobileMenuVariants}
+            variants={logoVariants}
             initial="hidden"
             animate="visible"
-            exit="exit"
-            className="fixed top-0 right-0 h-screen w-3/4 bg-dark-surface/95 backdrop-blur-lg p-6 md:hidden flex flex-col border-l border-light-surface/20"
           >
-            <div className="flex justify-end">
-              <motion.button 
-                onClick={() => setIsOpen(false)} 
-                className="text-accent mb-8 p-2"
-                whileTap={{ scale: 0.9 }}
+            <Link href="/" className="text-2xl font-bold gradient-text">
+              VM
+            </Link>
+          </motion.div>
+
+          {/* Desktop Navigation */}
+          <motion.nav 
+            className="hidden md:flex space-x-8"
+            variants={navVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {navLinks.map((link, i) => (
+              <motion.div 
+                key={link.name}
+                variants={linkVariants}
               >
-                <FiX size={24} />
-              </motion.button>
-            </div>
-            <nav className="flex flex-col space-y-6">
-              {navLinks.map((link, i) => (
+                <Link href={link.href} className="text-text-secondary hover:text-primary transition-all duration-300">
+                  <span className="text-accent mr-1 font-mono text-sm">{i + 1}.</span> {link.name}
+                </Link>
+              </motion.div>
+            ))}
+            <motion.div
+              variants={linkVariants}
+            >
+              <motion.a 
+                href="#" 
+                onClick={openResumeModal}
+                className="button text-sm rounded-lg"
+                whileHover={{
+                  y: -5,
+                  transition: { duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }
+                }}
+              >
+                Resume
+              </motion.a>
+            </motion.div>
+          </motion.nav>
+
+          {/* Mobile Navigation Toggle */}
+          <div className="md:hidden">
+            <motion.button 
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-accent focus:outline-none p-2"
+              whileTap={{ scale: 0.9 }}
+            >
+              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            </motion.button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div 
+              variants={mobileMenuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed top-0 right-0 h-screen w-3/4 bg-dark-surface/95 backdrop-blur-lg p-6 md:hidden flex flex-col border-l border-light-surface/20"
+            >
+              <div className="flex justify-end">
+                <motion.button 
+                  onClick={() => setIsOpen(false)} 
+                  className="text-accent mb-8 p-2"
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FiX size={24} />
+                </motion.button>
+              </div>
+              <nav className="flex flex-col space-y-6">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: 0.3,
+                      delay: i * 0.08,
+                      ease: [0.215, 0.61, 0.355, 1]
+                    }}
+                  >
+                    <Link 
+                      href={link.href}
+                      onClick={() => setIsOpen(false)} 
+                      className="text-text-secondary hover:text-primary transition-all duration-300 text-lg flex items-center"
+                    >
+                      <span className="text-accent mr-3 font-mono">{i + 1}.</span> {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
                 <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{
                     duration: 0.3,
-                    delay: i * 0.08,
+                    delay: navLinks.length * 0.08,
                     ease: [0.215, 0.61, 0.355, 1]
                   }}
+                  className="pt-4 mt-4 border-t border-light-surface/20"
                 >
-                  <Link 
-                    href={link.href}
-                    onClick={() => setIsOpen(false)} 
-                    className="text-text-secondary hover:text-primary transition-all duration-300 text-lg flex items-center"
+                  <a 
+                    href="#"
+                    onClick={openResumeModal}
+                    className="button w-full justify-center inline-flex"
                   >
-                    <span className="text-accent mr-3 font-mono">{i + 1}.</span> {link.name}
-                  </Link>
+                    Resume
+                  </a>
                 </motion.div>
-              ))}
+              </nav>
+              
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.3,
-                  delay: navLinks.length * 0.08,
-                  ease: [0.215, 0.61, 0.355, 1]
-                }}
-                className="pt-4 mt-4 border-t border-light-surface/20"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.7 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="mt-auto text-center text-xs text-text-secondary font-mono"
               >
-                <a 
-                  href="/resume.pdf" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="button w-full justify-center inline-flex"
-                >
-                  Resume
-                </a>
+                <p>vedangnitin.malusare@siden.edu</p>
               </motion.div>
-            </nav>
-            
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.7 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="mt-auto text-center text-xs text-text-secondary font-mono"
-            >
-              <p>vedangnitin.malusare@siden.edu</p>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+          )}
+        </AnimatePresence>
+      </header>
+
+      {/* Resume Modal */}
+      <ResumeModal 
+        isOpen={resumeModalOpen} 
+        onClose={() => setResumeModalOpen(false)}
+        resumeUrl={resumeUrl}
+      />
+    </>
   )
 }
 
