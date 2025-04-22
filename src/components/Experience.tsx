@@ -4,9 +4,24 @@ import { useInView } from 'react-intersection-observer'
 
 const Experience = () => {
   const [activeTab, setActiveTab] = useState(0)
-  const [ref, inView] = useInView({
+  
+  // Create separate refs for each motion element
+  const [titleRef, titleInView] = useInView({
     triggerOnce: true,
-    threshold: 0.1
+    threshold: 0.1,
+    rootMargin: "-50px 0px"
+  })
+  
+  const [tabsRef, tabsInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+    rootMargin: "-50px 0px"
+  })
+  
+  const [contentRef, contentInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+    rootMargin: "-50px 0px"
   })
 
   const experiences = [
@@ -37,9 +52,9 @@ const Experience = () => {
   return (
     <section id="experience" className="section bg-navy">
       <motion.div
-        ref={ref}
+        ref={titleRef}
         initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+        animate={titleInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.5 }}
         className="mb-12"
       >
@@ -51,21 +66,22 @@ const Experience = () => {
 
       <div className="flex flex-col md:flex-row gap-8">
         <motion.div
-          ref={ref}
+          ref={tabsRef}
           initial={{ opacity: 0, x: -30 }}
-          animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+          animate={tabsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="md:w-1/4"
+          className="md:w-1/4 w-full"
         >
-          <div className="flex md:flex-col overflow-x-auto md:overflow-visible border-b md:border-b-0 md:border-l border-slate">
+          {/* Improved mobile styling with better scrolling and visual indicators */}
+          <div className="flex md:flex-col overflow-x-auto scrollbar-hide md:overflow-visible border-b md:border-b-0 md:border-l border-slate">
             {experiences.map((exp, index) => (
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
-                className={`px-4 py-3 text-left min-w-max md:border-b-0 ${
+                className={`px-4 py-3 text-left whitespace-nowrap md:whitespace-normal md:border-b-0 transition-colors duration-200 ${
                   activeTab === index 
-                    ? 'text-secondary border-secondary md:border-l-2 -ml-px md:pl-5 font-medium' 
-                    : 'text-slate hover:text-secondary hover:bg-navyLight'
+                    ? 'text-secondary border-b-2 md:border-b-0 md:border-l-2 border-secondary -ml-px md:pl-5 font-medium bg-navyLight bg-opacity-30'
+                    : 'text-slate hover:text-secondary hover:bg-navyLight hover:bg-opacity-20'
                 }`}
               >
                 {exp.company}
@@ -75,11 +91,11 @@ const Experience = () => {
         </motion.div>
 
         <motion.div
-          ref={ref}
+          ref={contentRef}
           initial={{ opacity: 0, x: 30 }}
-          animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+          animate={contentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="md:w-3/4"
+          className="md:w-3/4 w-full"
         >
           {experiences.map((exp, index) => (
             <div 
@@ -91,10 +107,10 @@ const Experience = () => {
               </h3>
               <p className="text-slate mb-4 font-mono">{exp.duration}</p>
               <p className="text-slate mb-2">{exp.location}</p>
-              <ul className="space-y-4">
+              <ul className="space-y-4 mt-4">
                 {exp.description.map((bullet, i) => (
                   <li key={i} className="text-slate flex">
-                    <span className="text-secondary mr-2">▹</span>
+                    <span className="text-secondary mr-2 flex-shrink-0">▹</span>
                     <span>{bullet}</span>
                   </li>
                 ))}

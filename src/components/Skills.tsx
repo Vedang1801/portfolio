@@ -5,7 +5,7 @@ import { SiTensorflow, SiJavascript, SiCplusplus, SiPostgresql, SiMysql, SiFlask
 
 const Skills = () => {
   const [ref, inView] = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1
   })
 
