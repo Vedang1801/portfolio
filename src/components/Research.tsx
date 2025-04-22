@@ -42,7 +42,7 @@ const Research = () => {
             IEEE Conference Publication
           </div>
           <a 
-            href="https://ieeexplore.ieee.org/document/your-paper-id" 
+            href="https://ieeexplore.ieee.org/document/10392087" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-secondary hover:underline flex items-center"
