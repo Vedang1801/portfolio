@@ -1,0 +1,532 @@
+/* stylelint-disable at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* New vibrant color palette */
+  --foreground-rgb: 245, 245, 255;
+  --background-start-rgb: 17, 23, 35;
+  --background-end-rgb: 28, 26, 51;
+  --primary-color: 88, 95, 241; /* New primary blue/purple */
+  --secondary-color: 255, 94, 129; /* New vibrant pink */
+  --accent-color: 64, 223, 159; /* Mint green accent */
+  --dark-surface: 25, 30, 45;
+  --light-surface: 35, 40, 65;
+  --text-primary: 230, 237, 243;
+  --text-secondary: 188, 195, 204;
+  --glass-blur: 15px;
+  --font-primary: 'Outfit', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --shadow-normal: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --shadow-intense: 0 15px 40px rgba(0, 0, 0, 0.35);
+  --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Improved scroll behavior with smoother animation */
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--primary-color), 0.6) rgba(var(--light-surface), 0.2);
+  font-family: var(--font-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Enhanced custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(var(--dark-surface), 0.5);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--primary-color), 0.8),
+    rgba(var(--secondary-color), 0.8)
+  );
+  border-radius: 6px;
+  transition: all 0.3s var(--transition-smooth);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--primary-color), 1),
+    rgba(var(--secondary-color), 1)
+  );
+}
+
+/* Page content and typography improvements */
+body {
+  color: rgb(var(--text-primary));
+  background: linear-gradient(
+      135deg,
+      rgb(var(--background-start-rgb)) 0%,
+      rgb(var(--background-end-rgb)) 100%
+    );
+  background-attachment: fixed;
+  font-family: var(--font-primary);
+  overflow-x: hidden;
+  line-height: 1.75;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 15% 20%, rgba(var(--primary-color), 0.15), transparent 25%),
+    radial-gradient(circle at 85% 60%, rgba(var(--secondary-color), 0.12), transparent 25%);
+  z-index: -2;
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/noise.png');
+  opacity: 0.03;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Enhanced navigation styling */
+.nav-shadow {
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  background-color: rgba(var(--background-start-rgb), 0.75);
+  border-bottom: 1px solid rgba(var(--primary-color), 0.1);
+  transition: all 0.4s var(--transition-smooth);
+}
+
+/* Text highlight and animation styles */
+.highlight-text {
+  @apply text-[rgb(var(--secondary-color))];
+  position: relative;
+  display: inline-block;
+  font-weight: 600;
+  transition: all 0.3s var(--transition-bounce);
+}
+
+.highlight-text::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: linear-gradient(
+    90deg, 
+    rgb(var(--primary-color)), 
+    rgb(var(--secondary-color))
+  );
+  transition: width 0.4s var(--transition-bounce);
+}
+
+.highlight-text:hover::after {
+  width: 100%;
+}
+
+a {
+  transition: all 0.3s var(--transition-smooth);
+  position: relative;
+}
+
+a:hover {
+  color: rgb(var(--secondary-color));
+}
+
+/* Button styling with gradient effects */
+.button {
+  @apply relative px-6 py-3 rounded-lg font-medium;
+  position: relative;
+  background-color: transparent;
+  color: rgb(var(--text-primary));
+  border: 1px solid rgba(var(--primary-color), 0.5);
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.4s var(--transition-bounce);
+  box-shadow: 0 5px 15px rgba(var(--primary-color), 0.2);
+}
+
+.button:hover {
+  transform: translateY(-3px); /* Reduced from -5px to -3px for subtler effect */
+  box-shadow: 0 8px 20px rgba(var(--primary-color), 0.3);
+  border: 1px solid rgba(var(--primary-color), 1);
+  color: white;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(var(--primary-color), 0.85),
+    rgba(var(--secondary-color), 0.85)
+  );
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--transition-bounce);
+}
+
+.button:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.button-outline {
+  @apply relative px-6 py-3 rounded-lg font-medium;
+  background-color: transparent;
+  color: rgb(var(--accent-color));
+  border: 1px solid rgba(var(--accent-color), 0.5);
+  transition: all 0.4s var(--transition-bounce);
+}
+
+.button-outline:hover {
+  transform: translateY(-3px); /* Reduced from -5px to -3px for subtler effect */
+  background-color: rgba(var(--accent-color), 0.15);
+  border-color: rgb(var(--accent-color));
+}
+
+/* Section styling */
+.section {
+  @apply max-w-6xl mx-auto px-6 py-24;
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s ease;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.section-alt {
+  background: rgba(var(--light-surface), 0.075);
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.section-alt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--primary-color), 0.2),
+    rgba(var(--secondary-color), 0.2),
+    transparent
+  );
+  z-index: -1;
+}
+
+.section-alt::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--primary-color), 0.2),
+    rgba(var(--secondary-color), 0.2),
+    transparent
+  );
+  z-index: -1;
+}
+
+.section-title {
+  @apply flex items-center mb-16;
+  position: relative;
+}
+
+.section-title-text {
+  @apply text-white text-3xl md:text-4xl font-bold ml-5;
+  position: relative;
+  letter-spacing: -0.02em;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--text-primary)),
+    rgb(var(--primary-color))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-line {
+  @apply h-px w-24 md:w-32;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--primary-color)),
+    rgb(var(--secondary-color))
+  );
+  position: relative;
+  transition: width 0.4s var(--transition-bounce);
+}
+
+.section-line::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  right: 0;
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  background: rgb(var(--secondary-color));
+  box-shadow: 0 0 10px rgba(var(--secondary-color), 0.7);
+}
+
+.section-title:hover .section-line {
+  width: 40px;
+}
+
+/* Card styling with glassmorphism */
+.card {
+  @apply rounded-xl p-7 shadow-xl;
+  background: rgba(var(--light-surface), 0.15);
+  transition: all 0.4s var(--transition-bounce);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-normal);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    rgb(var(--primary-color)),
+    rgb(var(--secondary-color))
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--transition-bounce);
+}
+
+.card:hover {
+  transform: translateY(-7px);
+  box-shadow: var(--shadow-intense);
+  border-color: rgba(var(--primary-color), 0.2);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Project/work styling */
+.project-image-container {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-normal);
+  transition: all 0.5s var(--transition-bounce);
+}
+
+.project-image {
+  transition: all 0.6s var(--transition-bounce);
+  filter: grayscale(30%) brightness(90%);
+}
+
+.project-image-container:hover .project-image {
+  filter: grayscale(0%) brightness(110%);
+  transform: scale(1.05);
+}
+
+.project-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 70%,
+    rgba(var(--background-start-rgb), 0.8)
+  );
+  opacity: 0.6;
+  transition: opacity 0.4s var(--transition-smooth);
+}
+
+.project-image-container:hover::after {
+  opacity: 0.2;
+}
+
+/* Input and form styling */
+input, textarea {
+  @apply rounded-xl px-5 py-4;
+  background: rgba(var(--dark-surface), 0.6);
+  border: 1px solid rgba(var(--text-secondary), 0.15);
+  transition: all 0.3s var(--transition-smooth);
+  color: rgb(var(--text-primary));
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+input:focus, textarea:focus {
+  @apply outline-none;
+  border: 1px solid rgba(var(--primary-color), 0.8);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color), 0.15);
+  background: rgba(var(--dark-surface), 0.8);
+}
+
+/* Three.js canvas container */
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  opacity: 0.65;
+  filter: saturate(1.2);
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.8s var(--transition-smooth) forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.8s var(--transition-bounce) forwards;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.7s var(--transition-bounce) forwards;
+}
+
+.glow-pulse {
+  animation: glowPulse 2s infinite var(--transition-smooth);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0% { filter: drop-shadow(0 0 2px rgba(var(--accent-color), 0.3)); }
+  50% { filter: drop-shadow(0 0 10px rgba(var(--accent-color), 0.6)); }
+  100% { filter: drop-shadow(0 0 2px rgba(var(--accent-color), 0.3)); }
+}
+
+/* Animation fallback classes */
+.motion-element {
+  transition: opacity 0.8s ease, transform 0.8s var(--transition-bounce);
+}
+
+.motion-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* New gradient text class */
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--primary-color)),
+    rgb(var(--secondary-color))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* New tech tag style */
+.tech-tag {
+  @apply px-3 py-1 rounded-full text-xs font-medium;
+  background: rgba(var(--primary-color), 0.15);
+  color: rgb(var(--text-primary));
+  border: 1px solid rgba(var(--primary-color), 0.2);
+  transition: all 0.3s var(--transition-bounce);
+}
+
+.tech-tag:hover {
+  background: rgba(var(--primary-color), 0.25);
+  transform: translateY(-2px);
+}
+
+/* Custom list styles */
+.custom-list li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.custom-list li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: rgb(var(--accent-color));
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+  
+  .canvas-container {
+    opacity: 0.4;
+  }
+  
+  .section {
+    @apply py-16 px-5;
+  }
+  
+  .section-title-text {
+    @apply text-2xl ml-3;
+  }
+  
+  .section-line {
+    @apply w-16;
+  }
+  
+  .card {
+    @apply p-5;
+  }
+}
