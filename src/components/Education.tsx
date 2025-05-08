@@ -16,6 +16,7 @@ const Education = () => {
       duration: "August 2023 - May 2025 (Expected)",
       location: "New York, NY",
       gpa: "3.95",
+      logo: "/logos/pace-logo-1.png", 
       courses: [
         "Python Programming", "Artificial Intelligence", "Deep Learning", 
         "Natural Language Processing", "Data Science", "Parallel Computing", 
@@ -28,7 +29,8 @@ const Education = () => {
       degree: "Bachelor's in Computer Engineering",
       duration: "August 2019 - May 2023",
       location: "Mumbai, MH",
-      gpa: "9.11"
+      gpa: "9.11",
+      logo: "/logos/rait-logo.png", 
     }
   ]
 
@@ -63,7 +65,17 @@ const Education = () => {
               </div>
             </div>
             <div>
-              <h3 className="text-white text-xl font-bold">{edu.school}</h3>
+              <div className="flex items-center mb-1">
+                {edu.logo && (
+                  <img
+                    src={edu.logo}
+                    alt={`${edu.school} logo`}
+                    className="w-8 h-8 mr-3 rounded bg-white object-contain border"
+                    style={{ maxWidth: 32, maxHeight: 32 }}
+                  />
+                )}
+                <h3 className="text-white text-xl font-bold">{edu.school}</h3>
+              </div>
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 <p className="text-secondary">{edu.degree}</p>
                 {edu.concentration && (

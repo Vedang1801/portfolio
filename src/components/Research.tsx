@@ -38,7 +38,15 @@ const Research = () => {
           Researched and developed ML models for personality classification, contributing to a paper published at IEEE - ICCUBEA 2023.
         </p>
         <div className="flex items-center justify-between">
-          <div className="text-xs font-mono text-slate">
+          <div className="text-xs font-mono text-slate flex items-center">
+            <div className="bg-white p-1 rounded flex items-center justify-center mr-3">
+              <img
+                src="/logos/ieee-logo.png"
+                alt="IEEE Logo"
+                className="w-12 h-5"
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
             IEEE Conference Publication
           </div>
           <a 
